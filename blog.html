@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Блог — Даима, ИИ-агенты для кафе и доставки</title>
+<meta name="description" content="Статьи для владельцев кафе, ресторанов и доставки: как открыть доставку, не терять заказы в час пик и зарабатывать на доставке больше.">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Даима">
+<meta property="og:title" content="Блог Даима — для владельцев кафе и доставки">
+<meta property="og:description" content="Как открыть доставку, не терять заказы в час пик и зарабатывать на доставке больше.">
+<meta property="og:image" content="og.jpg">
+<meta name="theme-color" content="#000000">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700&family=Golos+Text:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#000000;
+  --panel:#0A0C0B;
+  --line:#1E2523;
+  --green:#18E08C;
+  --white:#FFFFFF;
+  --gray:#9DA9A3;
+  --gray-d:#6E7A74;
+  --disp:'Unbounded',system-ui,sans-serif;
+  --body:'Golos Text',system-ui,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+  --pad:20px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--bg);color:var(--white);
+  font-family:var(--body);font-size:17px;line-height:1.62;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  min-height:100vh;display:flex;flex-direction:column;
+}
+main{flex:1}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--green);outline-offset:3px}
+.wrap{padding-left:var(--pad);padding-right:var(--pad);max-width:1140px;margin:0 auto}
+
+.nav{position:sticky;top:0;z-index:10;background:rgba(0,0,0,.86);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:60px;gap:12px}
+.mark{display:flex;align-items:baseline;gap:9px;min-width:0}
+.mark b{font-family:var(--disp);font-weight:700;font-size:16px;color:var(--green)}
+.mark span{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--gray-d)}
+.nav-r{display:flex;align-items:center;gap:16px;flex-shrink:0}
+.nav-link{font-family:var(--mono);font-size:13px;color:var(--gray);white-space:nowrap}
+.nav-link[aria-current]{color:var(--green)}
+.nav-tel{font-family:var(--mono);font-size:13px;color:var(--white);white-space:nowrap}
+
+.head{padding:64px 0 72px}
+.eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--green)}
+h1{font-family:var(--disp);font-weight:600;font-size:32px;letter-spacing:-.045em;line-height:1.08;margin-top:14px;max-width:18ch}
+.lead{font-size:17px;color:var(--gray);margin-top:18px;max-width:52ch}
+
+.tg{margin-top:22px;font-size:15.5px;line-height:2;color:var(--gray)}
+.tg a{color:var(--green);text-decoration:underline;text-underline-offset:4px}
+
+.posts{list-style:none;display:grid;gap:14px;padding-bottom:64px}
+.posts:empty{display:none}
+.post{display:block;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:24px;transition:border-color .2s}
+.post:hover{border-color:var(--green)}
+.post time{font-family:var(--mono);font-size:11px;color:var(--gray-d)}
+.post h2{font-family:var(--disp);font-weight:500;font-size:19px;letter-spacing:-.02em;line-height:1.25;margin-top:10px}
+.post p{color:var(--gray);font-size:15.5px;margin-top:8px}
+
+footer{border-top:1px solid var(--line);padding:26px var(--pad) 32px;text-align:center;font-family:var(--mono);font-size:10px;line-height:2.2;color:#3E4744;letter-spacing:.08em}
+footer a{color:var(--green);display:inline-block;padding:6px 2px}
+.nav-link,.nav-tel{display:inline-flex;align-items:center;min-height:44px}
+
+@media(max-width:699px){
+  .mark{flex-direction:column;gap:2px}
+  .mark span{font-size:10px}
+  .nav-r{gap:12px}
+  .nav-tel{font-size:12.5px}
+  .eyebrow,footer{font-size:11px}
+  .f-s{display:none}
+  .f-i{display:block}
+}
+@media(max-width:359px){
+  .mark span{display:none}
+  .nav-tel{font-size:12px}
+}
+@media(min-width:700px){
+  :root{--pad:40px}
+  h1{font-size:46px}
+  .head{padding:88px 0 48px}
+  .posts{grid-template-columns:1fr 1fr}
+}
+@media(min-width:960px){
+  h1{font-size:56px}
+  .posts{grid-template-columns:1fr 1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="mark" href="./"><b>Даима</b><span>ИИ-агенты для кафе и доставки</span></a>
+    <div class="nav-r">
+      <a class="nav-link" href="blog.html" aria-current="page">Блог</a>
+      <a class="nav-tel" href="tel:+79056039922">+7 905 603-99-22</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="head">
+    <div class="wrap">
+      <div class="eyebrow">Блог</div>
+      <h1>Для владельцев кафе и доставки</h1>
+      <p class="lead">Как открыть доставку, не терять заказы в час пик и зарабатывать на доставке больше. Пишем по опыту работы с заведениями Кавказа.</p>
+      <p class="tg">Новости о нашей работе — в <a href="https://t.me/daima095" target="_blank" rel="noopener">Telegram-канале Даима</a></p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <!--
+        Список статей. Каждая новая статья — отдельный пункт, свежие сверху:
+        <li><a class="post" href="blog/adres-stati.html">
+          <time datetime="2026-10-02">2 октября 2026</time>
+          <h2>Заголовок статьи</h2>
+          <p>Одна-две строки о том, что в статье.</p>
+        </a></li>
+      -->
+      <ul class="posts" id="posts"></ul>
+    </div>
+  </section>
+</main>
+
+<footer><span class="f-i">Даима · <span style="white-space:nowrap">ИИ-агенты</span> для кафе и доставки</span><span class="f-s"> · </span><span class="f-i"><a href="./">На главную</a></span></footer>
+
+</body>
+</html>
