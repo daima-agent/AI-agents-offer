@@ -147,11 +147,12 @@ footer a{color:var(--green)}
 }
 @keyframes up{to{opacity:1;transform:none}}
 .b .t{display:block;font-family:var(--mono);font-size:9px;margin-top:5px;text-align:right}
-.b.g{align-self:flex-start;background:#171B19;border-bottom-left-radius:3px;color:#DDE4E0}
-.b.g .t{color:var(--gray-d)}
-.b.a{align-self:flex-end;background:var(--green);color:#00160C;border-bottom-right-radius:3px;font-weight:500}
-.b.a .t{color:#046B40}
-.dots{align-self:flex-end;display:flex;gap:4px;padding:14px 16px;background:var(--green);border-radius:12px;border-bottom-right-radius:3px;flex:none}
+.b.g{align-self:flex-end;background:var(--green);color:#00160C;border-bottom-right-radius:3px;font-weight:500}
+.b.g .t{color:#046B40}
+.b.a{align-self:flex-start;background:#171B19;border-bottom-left-radius:3px;color:#DDE4E0}
+.b.a .t{color:var(--gray-d)}
+.dots{align-self:flex-start;display:flex;gap:4px;padding:14px 16px;background:#171B19;border-radius:12px;border-bottom-left-radius:3px;flex:none}
+.dots i{background:#DDE4E0!important}
 .dots i{width:6px;height:6px;border-radius:50%;background:#00160C;animation:bl 2.4s ease-in-out infinite}
 .dots i:nth-child(2){animation-delay:.4s}
 .dots i:nth-child(3){animation-delay:.8s}
@@ -574,11 +575,11 @@ ym(113157990,'init',{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:tr
         </div>
         <div class="chat-time">пятница<br>22:10</div>
       </div>
-      <div class="chat-body" id="chatBody"><p class="chat-hint">Попробуйте сами: вы — Амина. Гость пишет — нажимайте «Ответить».</p></div>
+      <div class="chat-body" id="chatBody"><p class="chat-hint">Попробуйте сами: вы — гость. Нажимайте «Написать ИИ», и Амина ответит.</p></div>
       <div class="chat-foot">
         <span class="led"></span>
         <span>Первый ответ через 8 секунд</span>
-        <button class="again" id="again" type="button">Ответить</button>
+        <button class="again" id="again" type="button">Написать ИИ</button>
       </div>
     </div>
 
@@ -738,39 +739,31 @@ function put(m){
   e.className='b '+m.w;
   e.textContent=(m.w==='a'?'🤖 ':'')+m.x;
   var s=document.createElement('span');
-  s.className='t'; s.textContent=m.t+(m.w==='a'?' ✓✓':'');
+  s.className='t'; s.textContent=m.t+(m.w==='g'?' ✓✓':'');
   e.appendChild(s); body.appendChild(e); down();
 }
 
-var idx=0, busy=true, btn=document.getElementById('again'), HINT=body.innerHTML, started=false;
-btn.disabled=true;
-function guest(){
-  while(idx<MSG.length && MSG[idx].w==='g'){ put(MSG[idx]); idx++; }
-  busy=false; btn.disabled=false;
-  if(idx>=MSG.length){ btn.textContent='Ещё раз ↺'; }
-}
-function start(){ tm.forEach(clearTimeout); tm=[]; idx=0; busy=true; body.innerHTML=HINT; btn.textContent='Ответить'; btn.disabled=true; tm.push(setTimeout(guest,700)); }
+var idx=0, busy=false, btn=document.getElementById('again'), HINT=body.innerHTML;
+function reset(){ tm.forEach(clearTimeout); tm=[]; idx=0; busy=false; body.innerHTML=HINT; btn.textContent='Написать ИИ'; btn.disabled=false; }
 function step(){
   if(busy) return;
-  if(idx>=MSG.length){ start(); return; }
-  var a=MSG[idx]; if(a.w!=='a') return;
+  if(idx>=MSG.length){ reset(); return; }
+  var g=MSG[idx]; if(g.w!=='g') return;
   busy=true; btn.disabled=true;
+  put(g); idx++;
+  var a=MSG[idx];
+  function done(){ busy=false; btn.disabled=false; if(idx>=MSG.length) btn.textContent='Ещё раз ↺'; }
+  if(!a||a.w!=='a'){ done(); return; }
   tm.push(setTimeout(function(){
     var t=document.createElement('div');
     t.className='dots'; t.id='dts'; t.innerHTML='<i></i><i></i><i></i>';
     body.appendChild(t); down();
-  },300));
+  },700));
   tm.push(setTimeout(function(){
-    var t=document.getElementById('dts'); if(t)t.remove(); put(a); idx++;
-    if(idx>=MSG.length){ busy=false; btn.disabled=false; btn.textContent='Ещё раз ↺'; }
-    else { tm.push(setTimeout(guest,1200)); }
-  },300+a.p));
+    var t=document.getElementById('dts'); if(t)t.remove(); put(a); idx++; done();
+  },700+a.p));
 }
 btn.addEventListener('click',step);
-if('IntersectionObserver' in window){
-  var io=new IntersectionObserver(function(e){ if(e[0].isIntersecting&&!started){ started=true; start(); io.disconnect(); } },{threshold:.3});
-  io.observe(document.getElementById('chat'));
-}else{ start(); }
 
 /* ===== Калькулятор ===== */
 (function(){
