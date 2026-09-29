@@ -4,13 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Даима — ИИ-агенты для кафе и доставки</title>
-<meta name="description" content="Принимает заказы на доставку и самовывоз в WhatsApp. Работает круглосуточно.">
+<meta name="description" content="ИИ-Агент для кафе и доставки: отвечает гостю за секунды, собирает заказ и передаёт на кухню. Работает круглосуточно.">
 
 <meta property="og:type" content="website">
-<meta property="og:title" content="ИИ-сотрудник, который увеличивает заказы на доставку">
-<meta property="og:description" content="Принимает заказы на доставку и самовывоз прямо в WhatsApp. Ночью, в выходные и в час пик.">
+<meta property="og:title" content="ИИ-Агент, который принимает заказы в WhatsApp">
+<meta property="og:description" content="Отвечает гостю за секунды, собирает заказ на доставку или самовывоз и передаёт на кухню. Работает круглосуточно.">
 <meta property="og:site_name" content="Даима">
-<meta property="og:image" content="og.jpg">
+<meta property="og:image" content="https://xn--80aakru.xn--p1ai/og.jpg">
+<meta property="og:url" content="https://xn--80aakru.xn--p1ai/">
+<link rel="canonical" href="https://xn--80aakru.xn--p1ai/">
 <meta name="theme-color" content="#000000">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
@@ -411,7 +413,7 @@ footer{padding:26px 0 32px;text-align:center;font-family:var(--mono);font-size:1
   .rep-grid{grid-template-columns:1fr 1fr}
   .rep-c{padding:22px 17px}
   .rep-n{font-size:24px}
-  .contacts{grid-template-columns:repeat(2,1fr);text-align:center;max-width:640px;margin-left:auto;margin-right:auto}
+  .contacts{grid-template-columns:repeat(3,1fr);text-align:center;max-width:900px;margin-left:auto;margin-right:auto}
   .seal{width:180px;height:180px}
   .chat,.chips,.demo-note{margin-left:auto;margin-right:auto}
   .demo .eyebrow,.demo h2,.demo .lead{text-align:center;margin-left:auto;margin-right:auto}
@@ -421,6 +423,7 @@ footer{padding:26px 0 32px;text-align:center;font-family:var(--mono);font-size:1
 }
 @media(min-width:960px){
   .hero-in{display:grid;grid-template-columns:1.1fr .9fr;gap:64px;align-items:center}
+  .hero h1{font-size:50px}
   .badge{margin-top:0}
   h1{font-size:58px}
   .chat-body{height:450px}
@@ -437,9 +440,11 @@ footer{padding:26px 0 32px;text-align:center;font-family:var(--mono);font-size:1
 .nw{white-space:nowrap}
 .nav-link,.nav-tel{display:inline-flex;align-items:center;min-height:44px}
 .contacts .tel{display:inline-block;padding:8px 0}
-.wa{display:flex;align-items:center;justify-content:center;gap:8px;margin:14px auto 0;max-width:280px;min-height:48px;border-radius:999px;background:var(--green);color:#000;font-family:var(--body);font-weight:600;font-size:16px;letter-spacing:0;text-transform:none}
+.wa{white-space:nowrap;padding:0 24px;display:inline-flex;align-items:center;justify-content:center;gap:8px;margin:14px auto 0;min-height:48px;border-radius:999px;background:var(--green);color:#000;font-family:var(--body);font-weight:600;font-size:16px;letter-spacing:0;text-transform:none}
 .wa:hover{filter:brightness(1.08)}
+.cta-wa{margin-top:28px;text-align:center}
 .again{min-height:44px}
+.soc a{display:inline-flex;align-items:center;min-height:44px;margin:0 12px;color:var(--green);text-decoration:underline;text-underline-offset:4px}
 footer{padding-left:var(--pad);padding-right:var(--pad);line-height:2.2}
 footer a{display:inline-block;padding:6px 2px}
 @media(max-width:699px){
@@ -453,6 +458,7 @@ footer a{display:inline-block;padding:6px 2px}
 }
 @media(max-width:359px){
   .mark span{display:none}
+  .wa{white-space:normal;font-size:15px;padding:0 18px}
   .nav-tel{font-size:12px}
 }
 </style>
@@ -475,8 +481,8 @@ footer a{display:inline-block;padding:6px 2px}
   <div class="wrap hero-in">
     <div>
       <div class="eyebrow">Кафе · Рестораны · Доставка</div>
-      <h1><span class="nw">ИИ-сотрудник</span>,<br>который <em>увеличивает<br>заказы на доставку</em></h1>
-      <p class="lead">Принимает заказы на доставку и самовывоз прямо в WhatsApp. Ночью, в выходные и в час пик — когда заказы обычно теряются.</p>
+      <h1><span class="nw">ИИ-Агент</span>, который <em>принимает заказы <span class="nw">в WhatsApp</span></em></h1>
+      <p class="lead">Отвечает гостю за секунды, собирает заказ на доставку или самовывоз и передаёт на кухню. Работает круглосуточно — заказы не теряются ни ночью, ни в выходные, ни в час пик.</p>
     </div>
 
     <!-- БЕЙДЖ -->
@@ -540,7 +546,7 @@ footer a{display:inline-block;padding:6px 2px}
 <section class="sec deliv">
   <div class="wrap">
     <div class="rv">
-      <div class="eyebrow">Тариф «Бизнес»</div>
+      <div class="eyebrow">На всех тарифах</div>
       <h2>Отчёт каждый<br>понедельник</h2>
       <p class="lead">Показывает то, чего не видно в кассе: сколько гостей написали и ушли без заказа. И на чём именно ушли.</p>
     </div>
@@ -586,7 +592,7 @@ footer a{display:inline-block;padding:6px 2px}
       </div>
     </div>
 
-    <p class="rep-note rv">Цифры для примера. Первый отчёт приходит через месяц работы — раньше данных не хватает. На тарифе «Старт» отчёта нет.</p>
+    <p class="rep-note rv">Цифры для примера. Первый отчёт — уже через неделю работы, а можно и через день. Отчёт входит во все тарифы.</p>
   </div>
 </section>
 
@@ -706,7 +712,7 @@ footer a{display:inline-block;padding:6px 2px}
     <div class="rv">
       <div class="eyebrow">Стоимость</div>
       <h2>Цены фиксированные,<br>но платите <em>частями</em></h2>
-      <p class="lead">Сначала платите только за первый этап. Увидите работу — платите дальше.</p>
+      <p class="lead">Начинаем с бесплатного демо на вашем меню — до договора. Понравится — платите за первый этап. Увидите работу — платите дальше.</p>
     </div>
 
     <div class="plans rv">
@@ -734,9 +740,9 @@ footer a{display:inline-block;padding:6px 2px}
         <div class="total">Всего <b>100 000 ₽</b> · далее <b>12 000 ₽</b> в месяц</div>
 
         <div class="meta">
-          <div class="meta-r"><span>Заказов в месяц включено</span><b>500<br>≈17 в день</b></div>
-          <div class="meta-r"><span>Заказ сверх включённого</span><b>24 ₽</b></div>
-          <div class="meta-r"><span>Срок запуска</span><b>2 недели</b></div>
+          <div class="meta-r"><span>Разговоров в месяц включено</span><b>700<br>≈23 в день</b></div>
+          <div class="meta-r"><span>Разговор сверх включённого</span><b>17 ₽</b></div>
+          <div class="meta-r"><span>Срок запуска</span><b>1 месяц</b></div>
         </div>
 
         <ul>
@@ -746,13 +752,14 @@ footer a{display:inline-block;padding:6px 2px}
           <li>Уточняет адрес: дом, квартира, подъезд, этаж</li>
           <li>Следит, чтобы кухня подтвердила заказ</li>
           <li>Сложный случай передаёт человеку</li>
+          <li>Отчёт владельцу каждую неделю</li>
+          <li>Видно, сколько гостей ушло без заказа и почему</li>
         </ul>
       </div>
 
       <div class="plan hot">
-        <div class="tag">С отчётом</div>
         <div class="plan-n">Бизнес</div>
-        <div class="plan-f">Крупное заведение</div>
+        <div class="plan-f">Заведение с большим потоком</div>
 
         <div class="first">
           <div class="first-l">Первый платёж</div>
@@ -773,24 +780,25 @@ footer a{display:inline-block;padding:6px 2px}
         <div class="total">Всего <b>150 000 ₽</b> · далее <b>25 000 ₽</b> в месяц</div>
 
         <div class="meta">
-          <div class="meta-r"><span>Заказов в месяц включено</span><b>1 500<br>≈50 в день</b></div>
-          <div class="meta-r"><span>Заказ сверх включённого</span><b>17 ₽</b></div>
-          <div class="meta-r"><span>Срок запуска</span><b>3–4 недели</b></div>
+          <div class="meta-r"><span>Разговоров в месяц включено</span><b>1 750<br>≈58 в день</b></div>
+          <div class="meta-r"><span>Разговор сверх включённого</span><b>14 ₽</b></div>
+          <div class="meta-r"><span>Срок запуска</span><b>1 месяц</b></div>
         </div>
 
         <ul>
-          <li>Всё из «Старта»</li>
-          <li>Отчёт владельцу каждую неделю</li>
-          <li>Видно, сколько гостей ушло без заказа</li>
-          <li>И на чём именно они ушли</li>
+          <li>Всё то же, что в «Старте», включая отчёт</li>
+          <li>Больше разговоров в месяц</li>
+          <li>Разговор сверх включённого дешевле</li>
         </ul>
       </div>
 
     </div>
 
-    <p class="note rv"><b>Заказов больше, чем включено — доплачиваете по той же цене.</b> Никаких штрафов. Когда лишних становится много, выгоднее перейти на «Бизнес» — посчитаем вместе на ваших цифрах.</p>
+    <p class="note rv"><b>Разговор — это переписка одного гостя за сутки,</b> сколько бы сообщений в ней ни было. Не заказ и не сообщение.</p>
 
-    <p class="note rv"><b>Несколько точек.</b> Каждая точка — своя подписка. Вторая и следующие со скидкой 30%, внедрение каждой следующей — 60 000 ₽.</p>
+    <p class="note rv"><b>Разговоров больше, чем включено — доплачиваете по той же цене.</b> Никаких штрафов. Когда лишних становится много, выгоднее перейти на «Бизнес» — посчитаем вместе на ваших цифрах.</p>
+
+    <p class="note rv"><b>Несколько точек — тариф «Сеть».</b> Первая точка — по цене «Бизнеса». Каждая следующая — плюс 12 000 ₽ в месяц к подписке, 60 000 ₽ за внедрение и 700 разговоров в общий пакет. У каждой точки свой номер.</p>
   </div>
 </section>
 
@@ -808,8 +816,8 @@ footer a{display:inline-block;padding:6px 2px}
       <div class="q"><button class="q-b">Надо менять номер?<span class="q-m">+</span></button><div class="q-a"><p>Нет. Он работает на вашем рабочем номере WhatsApp. Гость увидит только скорость ответа.</p></div></div>
       <div class="q"><button class="q-b">У нас нет учётной программы<span class="q-m">+</span></button><div class="q-a"><p>Подойдёт. Заказы придут в чат администратора. Поставите программу позже — подключим.</p></div></div>
       <div class="q"><button class="q-b">Меню меняется. Кто обновляет?<span class="q-m">+</span></button><div class="q-a"><p>Мы. Присылаете новое меню — обновляем. Входит в оплату.</p></div></div>
-      <div class="q"><button class="q-b">А если заказов будет больше, чем в тарифе?<span class="q-m">+</span></button><div class="q-a"><p>Доплачиваете за лишние по той же цене, что внутри тарифа. Никаких штрафов. Когда лишних становится много, выгоднее перейти на «Бизнес» — посчитаем вместе.</p></div></div>
-      <div class="q"><button class="q-b">Как понять, что подойдёт нам?<span class="q-m">+</span></button><div class="q-a"><p>Для этого оплата и разбита. Первый платёж — за прототип. Сами задаёте вопросы своих гостей и смотрите ответы. Подходит — идём дальше.</p></div></div>
+      <div class="q"><button class="q-b">А если разговоров будет больше, чем в тарифе?<span class="q-m">+</span></button><div class="q-a"><p>Доплачиваете за лишние по той же цене, что внутри тарифа. Никаких штрафов. Когда лишних становится много, выгоднее перейти на «Бизнес» — посчитаем вместе.</p></div></div>
+      <div class="q"><button class="q-b">Как понять, что подойдёт нам?<span class="q-m">+</span></button><div class="q-a"><p>Начнём с бесплатного демо: соберём Агента на вашем меню, до договора и без оплаты. Пишете ему как гость — и видите ответы, чек и отчёт владельцу. Подходит — подписываем договор, первый платёж идёт за прототип.</p></div></div>
     </div>
   </div>
 </section>
@@ -848,11 +856,14 @@ footer a{display:inline-block;padding:6px 2px}
     </svg>
 
     <h2>Соберём <span class="nw">ИИ-сотрудника</span><br>под ваше заведение</h2>
-    <p class="lead">Покажем, как он отвечает вашим гостям.</p>
+    <p class="lead">Бесплатно соберём демо на вашем меню — до договора. Напишете ему как гость и увидите всё сами.</p>
+
+    <div class="cta-wa"><a class="wa" href="https://wa.me/79056039922?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%B1%D0%B5%D1%81%D0%BF%D0%BB%D0%B0%D1%82%D0%BD%D0%BE%D0%B5%20%D0%B4%D0%B5%D0%BC%D0%BE%20%D0%BD%D0%B0%20%D0%BD%D0%B0%D1%88%D0%B5%D0%BC%20%D0%BC%D0%B5%D0%BD%D1%8E" target="_blank" rel="noopener">Получить демо в WhatsApp</a></div>
 
     <div class="contacts">
-      <div><span>WhatsApp и звонки</span><a class="tel js-tel js-phone" href="tel:+79056039922">+7 905 603-99-22</a><a class="wa" href="https://wa.me/79056039922?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%98%D0%98-%D0%B0%D0%B3%D0%B5%D0%BD%D1%82%D0%B0%20%D0%B4%D0%BB%D1%8F%20%D0%BD%D0%B0%D1%88%D0%B5%D0%B3%D0%BE%20%D0%B7%D0%B0%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F" target="_blank" rel="noopener">Написать в WhatsApp</a></div>
+      <div><span>WhatsApp и звонки</span><a class="tel js-tel js-phone" href="tel:+79056039922">+7 905 603-99-22</a></div>
       <div><span>Мы здесь</span>Грозный, Угрюмова 63</div>
+      <div class="soc"><span>Мы в соцсетях</span><a href="https://t.me/daima095" target="_blank" rel="noopener">Telegram</a><a href="https://instagram.com/daima095" target="_blank" rel="noopener">Instagram</a></div>
     </div>
   </div>
   <footer><span class="f-i">Даима · <span class="nw">ИИ-агенты</span> для кафе и доставки</span><span class="f-s"> · </span><span class="f-i"><a href="blog.html">Блог</a></span><span class="f-s"> · </span><span class="f-i" id="yr">2026</span></footer>
