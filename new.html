@@ -372,7 +372,7 @@ input[type=range]::-moz-range-thumb{
 /* ===== ФИНАЛ ===== */
 .final{background:var(--panel);border-top:1px solid var(--line);text-align:center}
 .seal{width:148px;height:148px;margin:0 auto 30px;display:block}
-.seal .ring{animation:spin 34s linear infinite;transform-origin:100px 100px}
+
 @keyframes spin{to{transform:rotate(360deg)}}
 .final .lead{margin:18px auto 0;max-width:30ch}
 .contacts{
@@ -499,6 +499,12 @@ footer a{display:inline-block;padding:6px 2px}
 .price-m{font-family:var(--disp);font-weight:700;font-size:28px;color:var(--green);letter-spacing:-.03em}
 .price-m small{font-family:var(--body);font-weight:400;font-size:15px;color:var(--gray);letter-spacing:0}
 .price-z{font-size:16px;color:var(--white);margin-top:6px}
+.mark{flex-direction:row!important;align-items:center!important;gap:10px!important}
+.mark-t{display:flex;flex-direction:column;gap:2px;min-width:0}
+.nav-av{width:34px;height:34px;border-radius:50%;background:var(--green);flex:none;display:block;overflow:hidden}
+.chat-foot .again{margin-left:auto;flex:none;min-height:44px;padding:0 20px;border-radius:999px;background:var(--green);color:#00160C;font-family:var(--body);font-size:15px;font-weight:600;letter-spacing:0;text-transform:none;border:0;cursor:pointer;transition:opacity .2s}
+.chat-foot .again:disabled{opacity:.4;cursor:default}
+.chat-hint{margin:auto 0;text-align:center;font-size:14px;color:var(--gray);line-height:1.5;padding:0 16px}
 /* ОДИН БЛОК — ОДИН ЭКРАН */
 .hero,.sec{min-height:calc(100svh - 60px);display:flex;flex-direction:column;justify-content:center}
 .hero>.wrap,.sec>.wrap{width:100%}
@@ -514,7 +520,7 @@ ym(113157990,'init',{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:tr
 
 <header class="nav">
   <div class="wrap nav-in">
-    <a class="mark" href="./"><b>Даима</b><span><span class="nw">ИИ-агенты</span> для кафе и доставки</span></a>
+    <a class="mark" href="./"><i class="nav-av"><svg class="av-mk" role="img" aria-label="Даима"><use href="#dm"/></svg></i><div class="mark-t"><b>Даима</b><span><span class="nw">ИИ-агенты</span> для кафе и доставки</span></div></a>
     <div class="nav-r">
       <a class="nav-link nav-calc" href="kalkulyator.html">Калькулятор выгоды</a>
       <a class="nav-link" href="blog.html">Блог</a>
@@ -526,7 +532,6 @@ ym(113157990,'init',{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:tr
 <!-- ПЕРВЫЙ ЭКРАН -->
 <section class="hero">
   <div class="wrap">
-    <div class="eyebrow">Кафе · Рестораны · Доставка</div>
     <h1><span class="nw">ИИ-Агент</span>, который <em>принимает заказы <span class="nw">в WhatsApp</span></em></h1>
     <p class="lead">Отвечает гостю за секунды, собирает заказ и передаёт на кухню. Работает круглосуточно.</p>
     <div class="hero-cta"><a class="wa" href="https://wa.me/79056039922?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%B1%D0%B5%D1%81%D0%BF%D0%BB%D0%B0%D1%82%D0%BD%D0%BE%D0%B5%20%D0%B4%D0%B5%D0%BC%D0%BE%20%D0%BD%D0%B0%20%D0%BD%D0%B0%D1%88%D0%B5%D0%BC%20%D0%BC%D0%B5%D0%BD%D1%8E" target="_blank" rel="noopener"><svg class="wa-i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2a9.8 9.8 0 0 0-8.4 14.8L2.3 21.7l4.8-1.3A9.8 9.8 0 1 0 12 2.2z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/><path d="M8.6 7.2c.2-.4.5-.4.7-.4h.6c.2 0 .4 0 .6.5l.8 1.9c.1.2.1.4 0 .6l-.5.7c-.1.2-.2.3 0 .6.5.9 1.2 1.7 2 2.3.3.2.5.3.7.1l.7-.8c.2-.2.4-.2.6-.1l1.9.9c.2.1.4.2.4.4 0 .3 0 1-.4 1.5-.4.5-1.4 1-2.2.9-1.6-.2-3.2-1.1-4.5-2.4-1.2-1.3-2.1-2.8-2.3-4.3-.1-.9.3-1.7.7-2z" fill="currentColor"/></svg>Попробовать бесплатно</a></div>
@@ -539,7 +544,6 @@ ym(113157990,'init',{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:tr
     <div class="rv">
       <div class="eyebrow">Живой пример</div>
       <h2>Обычный заказ<br>в 22:10</h2>
-      <p class="lead">Гость пишет обычными словами. Амина отвечает.</p>
     </div>
 
     <div class="chat rv" id="chat">
@@ -551,11 +555,11 @@ ym(113157990,'init',{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:tr
         </div>
         <div class="chat-time">пятница<br>22:10</div>
       </div>
-      <div class="chat-body" id="chatBody"></div>
+      <div class="chat-body" id="chatBody"><p class="chat-hint">Вы — гость. Нажимайте «Ответить», и Амина примет ваш заказ.</p></div>
       <div class="chat-foot">
         <span class="led"></span>
         <span>Первый ответ через 8 секунд</span>
-        <button class="again" id="again">Ещё раз ↺</button>
+        <button class="again" id="again" type="button">Ответить</button>
       </div>
     </div>
 
@@ -567,9 +571,8 @@ ym(113157990,'init',{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:tr
 <section class="sec deliv">
   <div class="wrap">
     <div class="rv">
-      <div class="eyebrow">Входит в цену</div>
       <h2>Отчёт каждый<br>понедельник</h2>
-      <p class="lead">Показывает, сколько гостей написали и ушли без заказа. И почему.</p>
+      <p class="lead">Показывает, сколько гостей написали и ушли без заказа. И почему. Помогает делать контент для соцсетей и развивать доставку.</p>
     </div>
 
     <div class="rep rv">
@@ -662,7 +665,7 @@ ym(113157990,'init',{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:tr
       <defs>
         <path id="rg" d="M 100,100 m -80,0 a 80,80 0 1,1 160,0 a 80,80 0 1,1 -160,0" fill="none"/>
       </defs>
-      <g class="ring" fill="#18E08C" font-family="Unbounded, sans-serif" font-size="12" font-weight="500">
+      <g class="ring" fill="#18E08C" font-family="Unbounded, sans-serif" font-size="12" font-weight="500"><animateTransform attributeName="transform" type="rotate" from="0 100 100" to="360 100 100" dur="34s" repeatCount="indefinite"/>
         <text><textPath href="#rg" textLength="496" lengthAdjust="spacing">СОТРУДНИК, КОТОРЫЙ РАБОТАЕТ ВСЕГДА ·</textPath></text>
       </g>
       <circle cx="100" cy="100" r="52" fill="#18E08C"/>
@@ -718,35 +721,28 @@ function put(m){
   e.appendChild(s); body.appendChild(e); down();
 }
 
-function play(){
-  tm.forEach(clearTimeout); tm=[];
-  body.innerHTML=''; var d=250;
-  MSG.forEach(function(m){
-    if(m.w==='a'){
-      d+=700;
-      tm.push(setTimeout(function(){
-        var t=document.createElement('div');
-        t.className='dots'; t.id='dts'; t.innerHTML='<i></i><i></i><i></i>';
-        body.appendChild(t); down();
-      },d));
-      d+=m.p;
-      tm.push(setTimeout(function(){
-        var t=document.getElementById('dts'); if(t)t.remove(); put(m);
-      },d));
-    }else{
-      tm.push(setTimeout(function(){ put(m); },d));
-    }
-    d+=Math.min(2500,800+m.x.length*17);
-  });
+var idx=0, busy=false, btn=document.getElementById('again'), HINT=body.innerHTML;
+function reset(){ tm.forEach(clearTimeout); tm=[]; idx=0; busy=false; body.innerHTML=HINT; btn.textContent='Ответить'; btn.disabled=false; }
+function done(){ busy=false; btn.disabled=false; if(idx>=MSG.length){ btn.textContent='Ещё раз ↺'; } }
+function step(){
+  if(busy) return;
+  if(idx>=MSG.length){ reset(); return; }
+  if(idx===0){ body.innerHTML=''; }
+  var g=MSG[idx]; if(g.w!=='g'){ return; }
+  busy=true; btn.disabled=true;
+  put(g); idx++;
+  var a=MSG[idx];
+  if(!a||a.w!=='a'){ done(); return; }
+  tm.push(setTimeout(function(){
+    var t=document.createElement('div');
+    t.className='dots'; t.id='dts'; t.innerHTML='<i></i><i></i><i></i>';
+    body.appendChild(t); down();
+  },700));
+  tm.push(setTimeout(function(){
+    var t=document.getElementById('dts'); if(t)t.remove(); put(a); idx++; done();
+  },700+a.p));
 }
-document.getElementById('again').addEventListener('click',play);
-
-if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){
-  MSG.forEach(put);
-}else{
-  var io=new IntersectionObserver(function(e){ if(e[0].isIntersecting){ play(); io.disconnect(); } },{threshold:.2});
-  io.observe(document.getElementById('chat'));
-}
+btn.addEventListener('click',step);
 
 /* ===== Калькулятор ===== */
 (function(){

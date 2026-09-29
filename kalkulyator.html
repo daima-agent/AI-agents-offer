@@ -370,7 +370,7 @@ input[type=range]::-moz-range-thumb{
 /* ===== ФИНАЛ ===== */
 .final{background:var(--panel);border-top:1px solid var(--line);text-align:center}
 .seal{width:148px;height:148px;margin:0 auto 30px;display:block}
-.seal .ring{animation:spin 34s linear infinite;transform-origin:100px 100px}
+
 @keyframes spin{to{transform:rotate(360deg)}}
 .final .lead{margin:18px auto 0;max-width:30ch}
 .contacts{
@@ -498,6 +498,9 @@ footer a{display:inline-block;padding:6px 2px}
 .calc-cta{margin-top:24px}
 .calc-cta .wa{margin:0}
 .est{font-size:12px;color:var(--gray-d)}
+.mark{flex-direction:row!important;align-items:center!important;gap:10px!important}
+.mark-t{display:flex;flex-direction:column;gap:2px;min-width:0}
+.nav-av{width:34px;height:34px;border-radius:50%;background:var(--green);flex:none;display:block;overflow:hidden}
 /* ОДИН БЛОК — ОДИН ЭКРАН */
 .sec:not(.calc-sec){min-height:calc(100svh - 60px);display:flex;flex-direction:column;justify-content:center}
 .sec>.wrap{width:100%}
@@ -513,7 +516,7 @@ ym(113157990,'init',{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:tr
 
 <header class="nav">
   <div class="wrap nav-in">
-    <a class="mark" href="./"><b>Даима</b><span><span class="nw">ИИ-агенты</span> для кафе и доставки</span></a>
+    <a class="mark" href="./"><i class="nav-av"><svg class="av-mk" role="img" aria-label="Даима"><use href="#dm"/></svg></i><div class="mark-t"><b>Даима</b><span><span class="nw">ИИ-агенты</span> для кафе и доставки</span></div></a>
     <div class="nav-r">
       <a class="nav-link nav-calc" href="kalkulyator.html" aria-current="page">Калькулятор выгоды</a>
       <a class="nav-link" href="blog.html">Блог</a>
