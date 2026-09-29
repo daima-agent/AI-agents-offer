@@ -14,7 +14,7 @@
 <meta property="og:image" content="https://xn--80aakru.xn--p1ai/og.jpg">
 <meta property="og:url" content="https://xn--80aakru.xn--p1ai/">
 <link rel="canonical" href="https://xn--80aakru.xn--p1ai/">
-<meta name="theme-color" content="#000000">
+<meta name="theme-color" content="#FAFAF8">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -527,6 +527,51 @@ footer a{display:inline-block;padding:6px 2px}
 /* ОДИН БЛОК — ОДИН ЭКРАН */
 .hero,.sec{min-height:calc(100svh - 60px);display:flex;flex-direction:column;justify-content:center}
 .hero>.wrap,.sec>.wrap{width:100%}
+/* ===== СВЕТЛАЯ ТЕМА (свод «Бренд-стратегия — Даима») ===== */
+:root{
+  --bg:#FAFAF8;--panel:#FFFFFF;--deep:#F2F4F1;--line:#E3E6E2;
+  --white:#14181A;--gray:#4B5651;--gray-d:#6E7A74;--green-d:#D5DBD7;
+  --mint-t:rgba(24,224,140,.14);
+  --mono:'Golos Text',system-ui,sans-serif;
+}
+body{background:var(--bg);color:var(--white)}
+:focus-visible{outline-color:var(--white)}
+/* мятный — только заливки; текст тёмный */
+em{color:inherit;background:linear-gradient(to top,#18E08C 0,#18E08C .3em,transparent .3em);-webkit-box-decoration-break:clone;box-decoration-break:clone;padding:0 .04em}
+.eyebrow,.mark b,.nav-link,footer a,.badge-rl,.chat-live,.st-n,.rep-act,.rep-ttl,.rep-r b,.rep-rec .rep-bt,.rep-rec li::before,
+.vs-l,.vs-n,.fld-v,.out-big b,.first-l,.q-m,.contacts .tel,.soc a,.tier-m,.pay li b,.calc-link,.price-m,.nav-ic,.chip{color:var(--white)}
+.eyebrow,.chat-live,.rep-act,.first-l,.vs-l{letter-spacing:.1em;font-weight:600}
+.eyebrow,.calc-hd{color:var(--gray-d)}
+.calc-hd{letter-spacing:.1em;font-weight:600}
+.nav-link,.nav-tel{font-weight:500}
+.contacts span{color:var(--gray-d)}
+footer{color:var(--gray-d)}
+.later li::before,.plan li::before{border-color:var(--white)}
+/* без свечений и градиентов */
+.hero::before,.demo::before,.deliv::before{display:none}
+.nav{background:var(--bg)!important;border-bottom:1px solid var(--line)}
+.demo,.deliv{border-top:1px solid var(--line)}
+.chat,.rep,.calc{border:1px solid var(--line)!important;box-shadow:none!important;background:var(--panel)!important}
+.rep-c,.calc-out{background:var(--panel)!important}
+.rep-ttl,.rep-rec,.meta{background:var(--mint-t)!important}
+.chip{border-color:var(--line);background:var(--panel)}
+/* переписка как в WhatsApp */
+.chat-body{background:#F2F4F1}
+.b.a{background:#FFFFFF;color:var(--white);border:1px solid var(--line)}
+.b.a .t{color:var(--gray-d)}
+.b.g{background:#18E08C;color:#0B1F15}
+.b.g .t{color:#0B5A38}
+.dots{background:#FFFFFF;border:1px solid var(--line)}
+.dots i{background:#6E7A74!important}
+.chat-hint{background:#FFFFFF;color:var(--gray);border:1px solid var(--line)}
+/* кнопки */
+.wa{color:#0B1F15}
+.wa-o{color:var(--white)!important;border-color:var(--white)!important}
+/* печать */
+.seal .ring{fill:#14181A}
+/* блоки цен и шагов */
+.tier,.price,.steps li{background:var(--panel)}
+.steps li::before{color:#0B1F15}
 </style>
 <!-- Яндекс Метрика -->
 <script>
