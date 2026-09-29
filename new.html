@@ -504,7 +504,7 @@ footer a{display:inline-block;padding:6px 2px}
 .nav-av{width:34px;height:34px;border-radius:50%;background:var(--green);flex:none;display:block;overflow:hidden}
 .chat-foot .again{margin-left:auto;flex:none;min-height:44px;padding:0 20px;border-radius:999px;background:var(--green);color:#00160C;font-family:var(--body);font-size:15px;font-weight:600;letter-spacing:0;text-transform:none;border:0;cursor:pointer;transition:opacity .2s}
 .chat-foot .again:disabled{opacity:.4;cursor:default}
-.chat-hint{margin:auto 0;text-align:center;font-size:14px;color:var(--gray);line-height:1.5;padding:0 16px}
+.chat-hint{align-self:center;text-align:center;font-size:12.5px;color:var(--gray);line-height:1.45;padding:6px 12px;margin:0 0 4px;background:rgba(255,255,255,.06);border-radius:8px;max-width:92%}
 /* ОДИН БЛОК — ОДИН ЭКРАН */
 .hero,.sec{min-height:calc(100svh - 60px);display:flex;flex-direction:column;justify-content:center}
 .hero>.wrap,.sec>.wrap{width:100%}
@@ -555,7 +555,7 @@ ym(113157990,'init',{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:tr
         </div>
         <div class="chat-time">пятница<br>22:10</div>
       </div>
-      <div class="chat-body" id="chatBody"><p class="chat-hint">Вы — гость. Нажимайте «Ответить», и Амина примет ваш заказ.</p></div>
+      <div class="chat-body" id="chatBody"><p class="chat-hint">Попробуйте сами: вы — Амина. Гость пишет — нажимайте «Ответить».</p></div>
       <div class="chat-foot">
         <span class="led"></span>
         <span>Первый ответ через 8 секунд</span>
@@ -721,28 +721,35 @@ function put(m){
   e.appendChild(s); body.appendChild(e); down();
 }
 
-var idx=0, busy=false, btn=document.getElementById('again'), HINT=body.innerHTML;
-function reset(){ tm.forEach(clearTimeout); tm=[]; idx=0; busy=false; body.innerHTML=HINT; btn.textContent='Ответить'; btn.disabled=false; }
-function done(){ busy=false; btn.disabled=false; if(idx>=MSG.length){ btn.textContent='Ещё раз ↺'; } }
+var idx=0, busy=true, btn=document.getElementById('again'), HINT=body.innerHTML, started=false;
+btn.disabled=true;
+function guest(){
+  while(idx<MSG.length && MSG[idx].w==='g'){ put(MSG[idx]); idx++; }
+  busy=false; btn.disabled=false;
+  if(idx>=MSG.length){ btn.textContent='Ещё раз ↺'; }
+}
+function start(){ tm.forEach(clearTimeout); tm=[]; idx=0; busy=true; body.innerHTML=HINT; btn.textContent='Ответить'; btn.disabled=true; tm.push(setTimeout(guest,700)); }
 function step(){
   if(busy) return;
-  if(idx>=MSG.length){ reset(); return; }
-  if(idx===0){ body.innerHTML=''; }
-  var g=MSG[idx]; if(g.w!=='g'){ return; }
+  if(idx>=MSG.length){ start(); return; }
+  var a=MSG[idx]; if(a.w!=='a') return;
   busy=true; btn.disabled=true;
-  put(g); idx++;
-  var a=MSG[idx];
-  if(!a||a.w!=='a'){ done(); return; }
   tm.push(setTimeout(function(){
     var t=document.createElement('div');
     t.className='dots'; t.id='dts'; t.innerHTML='<i></i><i></i><i></i>';
     body.appendChild(t); down();
-  },700));
+  },300));
   tm.push(setTimeout(function(){
-    var t=document.getElementById('dts'); if(t)t.remove(); put(a); idx++; done();
-  },700+a.p));
+    var t=document.getElementById('dts'); if(t)t.remove(); put(a); idx++;
+    if(idx>=MSG.length){ busy=false; btn.disabled=false; btn.textContent='Ещё раз ↺'; }
+    else { tm.push(setTimeout(guest,1200)); }
+  },300+a.p));
 }
 btn.addEventListener('click',step);
+if('IntersectionObserver' in window){
+  var io=new IntersectionObserver(function(e){ if(e[0].isIntersecting&&!started){ started=true; start(); io.disconnect(); } },{threshold:.3});
+  io.observe(document.getElementById('chat'));
+}else{ start(); }
 
 /* ===== Калькулятор ===== */
 (function(){
