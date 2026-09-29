@@ -752,7 +752,7 @@ function step(){
   busy=true; btn.disabled=true;
   put(g); idx++;
   var a=MSG[idx];
-  function done(){ busy=false; btn.disabled=false; if(idx>=MSG.length) btn.textContent='Ещё раз ↺'; }
+  function done(){ busy=false; btn.disabled=false; btn.textContent=(idx>=MSG.length)?'Ещё раз ↺':'Ответить'; }
   if(!a||a.w!=='a'){ done(); return; }
   tm.push(setTimeout(function(){
     var t=document.createElement('div');
