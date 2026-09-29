@@ -501,6 +501,9 @@ body{padding-bottom:78px}
 .calc-cta{margin-top:24px}
 .calc-cta .wa{margin:0}
 .est{font-size:12px;color:var(--gray-d)}
+/* ОДИН БЛОК — ОДИН ЭКРАН */
+.sec:not(.calc-sec){min-height:calc(100svh - 60px);display:flex;flex-direction:column;justify-content:center}
+.sec>.wrap{width:100%}
 </style>
 <!-- Яндекс Метрика -->
 <script>
@@ -563,9 +566,8 @@ ym(113157990,'init',{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:tr
       </div>
     </div>
 
-    <p class="calc-note rv">«Каждый пятый» — наша оценка, а не замер. Не согласны — подвиньте ползунки и посмотрите свою цифру.</p>
     <div class="calc-cta"><a class="wa" href="https://wa.me/79056039922?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%B1%D0%B5%D1%81%D0%BF%D0%BB%D0%B0%D1%82%D0%BD%D0%BE%D0%B5%20%D0%B4%D0%B5%D0%BC%D0%BE%20%D0%BD%D0%B0%20%D0%BD%D0%B0%D1%88%D0%B5%D0%BC%20%D0%BC%D0%B5%D0%BD%D1%8E" target="_blank" rel="noopener">Получить бесплатное демо</a>
-    <p class="cta-note">Бесплатно, до договора. Откроется WhatsApp.</p></div>
+    <p class="cta-note">Откроется в WhatsApp.</p></div>
   </div>
 </section>
 

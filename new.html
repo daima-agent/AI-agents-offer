@@ -152,10 +152,12 @@ footer a{color:var(--green)}
 .b.a{align-self:flex-end;background:var(--green);color:#00160C;border-bottom-right-radius:3px;font-weight:500}
 .b.a .t{color:#046B40}
 .dots{align-self:flex-end;display:flex;gap:4px;padding:14px 16px;background:var(--green);border-radius:12px;border-bottom-right-radius:3px;flex:none}
-.dots i{width:5px;height:5px;border-radius:50%;background:#00160C;animation:bl 1.1s infinite}
-.dots i:nth-child(2){animation-delay:.18s}
-.dots i:nth-child(3){animation-delay:.36s}
-@keyframes bl{0%,60%,100%{opacity:.25}30%{opacity:1}}
+.dots i{width:6px;height:6px;border-radius:50%;background:#00160C;animation:bl 1.5s ease-in-out infinite}
+.dots i:nth-child(2){animation-delay:.2s}
+.dots i:nth-child(3){animation-delay:.4s}
+@keyframes bl{0%,60%,100%{opacity:.3;transform:translateY(0)}30%{opacity:.9;transform:translateY(-3px)}}
+.dots,.b{animation:fin .35s ease-out}
+@keyframes fin{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 .chat-foot{
   display:flex;align-items:center;gap:9px;padding:13px 15px;border-top:1px solid var(--line);
   font-family:var(--mono);font-size:10.5px;color:var(--gray-d);background:var(--panel);
@@ -496,6 +498,9 @@ footer a{display:inline-block;padding:6px 2px}
 body{padding-bottom:78px}
 @media(max-width:699px){.nav-calc{display:none}}
 @media(min-width:700px){.tiers{grid-template-columns:repeat(3,1fr)}.steps{grid-template-columns:repeat(3,1fr)}.stick{display:none}body{padding-bottom:0}}
+/* ОДИН БЛОК — ОДИН ЭКРАН */
+.hero,.sec{min-height:calc(100svh - 60px);display:flex;flex-direction:column;justify-content:center}
+.hero>.wrap,.sec>.wrap{width:100%}
 </style>
 <!-- Яндекс Метрика -->
 <script>
@@ -524,7 +529,7 @@ ym(113157990,'init',{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:tr
     <h1><span class="nw">ИИ-Агент</span>, который <em>принимает заказы <span class="nw">в WhatsApp</span></em></h1>
     <p class="lead">Отвечает гостю за секунды, собирает заказ и передаёт на кухню. Работает круглосуточно.</p>
     <div class="hero-cta"><a class="wa" href="https://wa.me/79056039922?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%B1%D0%B5%D1%81%D0%BF%D0%BB%D0%B0%D1%82%D0%BD%D0%BE%D0%B5%20%D0%B4%D0%B5%D0%BC%D0%BE%20%D0%BD%D0%B0%20%D0%BD%D0%B0%D1%88%D0%B5%D0%BC%20%D0%BC%D0%B5%D0%BD%D1%8E" target="_blank" rel="noopener">Получить бесплатное демо</a>
-    <p class="cta-note">Бесплатно, до договора. Откроется WhatsApp.</p></div>
+    <p class="cta-note">Откроется в WhatsApp.</p></div>
   </div>
 </section>
 
@@ -591,12 +596,11 @@ ym(113157990,'init',{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:tr
       <div class="rep-rec">
         <div class="rep-bt">Что с этим делать</div>
         <ul>
-          <li><b>28 гостей искали то, чего нет в меню.</b> Посмотрите список — может, стоит добавить.</li>
+          <li><b>Чаще всего спрашивали про острые роллы.</b> Снимите про них рилс — интерес у гостей уже есть.</li>
         </ul>
       </div>
     </div>
 
-    <p class="rep-note rv">Цифры для примера.</p>
   </div>
 </section>
 
@@ -691,7 +695,7 @@ ym(113157990,'init',{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:tr
     </svg>
 
     <h2>Покажем на вашем меню — <em>бесплатно</em></h2>
-    <p class="lead">Мы из Грозного, Угрюмова 63. Можем приехать и показать вживую.</p>
+    <p class="lead">Мы из Грозного. Можем приехать и показать вживую.</p>
 
     <div class="cta-wa"><a class="wa" href="https://wa.me/79056039922?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%B1%D0%B5%D1%81%D0%BF%D0%BB%D0%B0%D1%82%D0%BD%D0%BE%D0%B5%20%D0%B4%D0%B5%D0%BC%D0%BE%20%D0%BD%D0%B0%20%D0%BD%D0%B0%D1%88%D0%B5%D0%BC%20%D0%BC%D0%B5%D0%BD%D1%8E" target="_blank" rel="noopener">Получить бесплатное демо</a></div>
 
@@ -719,13 +723,13 @@ document.getElementById('yr').textContent=new Date().getFullYear();
 /* ===== Переписка ===== */
 var MSG=[
  {w:'g',t:'22:10',x:'Здравствуйте! Две шаурмы с курицей и колу можно?'},
- {w:'a',t:'22:10',x:'Здравствуйте! Делаем острую или без? И соус — чесночный или сырный?',p:1200},
+ {w:'a',t:'22:10',x:'Здравствуйте! Делаем острую или без? И соус — чесночный или сырный?',p:2600},
  {w:'g',t:'22:11',x:'Одну острую, вторую без. Соус чесночный'},
- {w:'a',t:'22:11',x:'Записала: две шаурмы с курицей — одна острая, одна без, соус чесночный, и кола 0,5. Итого 890 ₽. Куда везём?',p:1500},
+ {w:'a',t:'22:11',x:'Записала: две шаурмы с курицей — одна острая, одна без, соус чесночный, и кола 0,5. Итого 890 ₽. Куда везём?',p:3400},
  {w:'g',t:'22:11',x:'Кадырова 18, кв. 42'},
- {w:'a',t:'22:12',x:'Принято. Курьер будет через 30–35 минут. Оплата картой или наличными?',p:1300},
+ {w:'a',t:'22:12',x:'Принято. Курьер будет через 30–35 минут. Оплата картой или наличными?',p:2600},
  {w:'g',t:'22:12',x:'Картой'},
- {w:'a',t:'22:12',x:'Готово. Заказ №2417 на кухне. Если что-то поменяется — пишите сюда, я на связи.',p:1400}
+ {w:'a',t:'22:12',x:'Готово. Заказ №2417 на кухне. Если что-то поменяется — пишите сюда, я на связи.',p:3000}
 ];
 var body=document.getElementById('chatBody'), tm=[];
 
@@ -745,6 +749,7 @@ function play(){
   body.innerHTML=''; var d=250;
   MSG.forEach(function(m){
     if(m.w==='a'){
+      d+=700;
       tm.push(setTimeout(function(){
         var t=document.createElement('div');
         t.className='dots'; t.id='dts'; t.innerHTML='<i></i><i></i><i></i>';
