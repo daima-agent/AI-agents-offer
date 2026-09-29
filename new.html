@@ -609,7 +609,22 @@ small.est{font-size:13px}
 .faq-more{margin-top:22px;font-size:16px;color:var(--gray)}
 .faq-more a{color:var(--white);font-weight:600;text-decoration:underline;text-decoration-color:#18E08C;text-decoration-thickness:3px;text-underline-offset:4px;display:inline-block;padding:10px 0}
 @media(min-width:700px){.seal-hero{width:140px!important;height:140px!important}}
+/* ПАРТИЯ: ВЫРАВНИВАНИЕ, КНОПКИ, БЛОКИ, МАРКЕР */
+em{background:linear-gradient(to top,#18E08C 0,#18E08C .2em,transparent .2em)}
+section.hero,section.sec{background:var(--bg)}
+section.sec:nth-of-type(even){background:#EEF1EC}
+section.final{background:var(--bg)!important}
+@media(max-width:519px){
+  .hero-cta .wa,.price-cta .wa,.calc-cta2 .wa,.cta-wa .wa,.calc-cta .wa{display:flex;width:100%;max-width:none}
+}
+@media(min-width:700px){
+  .hero>.wrap,.sec:not(.final)>.wrap{max-width:760px}
+  .demo .eyebrow,.demo h2,.demo .lead,.demo-note{text-align:left!important;margin-left:0!important;margin-right:0!important}
+  .chat,.demo-note,.rep{margin-left:0!important;margin-right:0!important}
+  .steps{grid-template-columns:1fr!important}
+}
 </style>
+
 <!-- Яндекс Метрика -->
 <script>
 (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window,document,'script','https://mc.yandex.ru/metrika/tag.js?id=113157990','ym');
