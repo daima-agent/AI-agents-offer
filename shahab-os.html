@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>ОС проектов — демо</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* VOICE: спокойный рабочий продукт, как готовая система, а не макет.
+   IDEA: прецизионный прибор — у каждого проекта шкала этапов со стрелкой, агент как датчик.
+   PICTURE: сама рабочая панель — проекты, шкала этапов, лента с заметками агента.
+   COLOUR and TYPE: алюминий, чёрный, оранжевая стрелка; Geist 500 + Geist.
+   LAYOUT: слева проекты, в центре проект и лента, справа агент и поле «внести изменение». */
+:root{color-scheme:light dark;--bg:light-dark(#e9eaec,#141517);--card:light-dark(#fff,#1d1f22);--ink:light-dark(#121314,#eceef0);--mute:light-dark(#62666c,#9aa0a6);--line:light-dark(#d3d5d9,#2e3135);--acc:#ff4f00;--accs:light-dark(#fff1ea,#2c1a10);--ok:light-dark(#1d7a46,#5cc98a);--warn:light-dark(#a35a00,#ffb050);--bad:light-dark(#b3261e,#ff7a70)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html{scroll-padding-top:16px}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 Geist,system-ui,sans-serif;overflow-x:clip}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.top{display:flex;align-items:center;gap:16px;padding:12px max(2vw,16px);background:var(--ink);color:var(--bg);flex-wrap:wrap}
+.logo{font-weight:600;font-size:17px;display:flex;align-items:center;gap:10px}
+.logo i{width:22px;height:22px;border-radius:50%;border:2px solid var(--bg);position:relative}
+.logo i::after{content:"";position:absolute;left:50%;top:2px;width:2px;height:8px;background:var(--acc);transform-origin:50% 100%;transform:translateX(-50%) rotate(40deg)}
+.kpi{display:flex;gap:22px;margin-left:auto;flex-wrap:wrap}
+.kpi div{font-size:12px;opacity:.75}.kpi b{display:block;font-size:20px;font-weight:500;opacity:1;color:var(--bg)}
+.kpi .hot b{color:var(--acc)}
+.app{display:grid;grid-template-columns:260px minmax(0,1fr) 340px;gap:16px;padding:16px max(2vw,16px);max-width:1440px;margin:auto}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:12px}
+h2{font-size:13px;font-weight:500;color:var(--mute);margin:0 0 10px}
+.side{padding:14px;align-self:start}
+.pj{display:block;width:100%;text-align:left;background:none;border:1px solid transparent;border-radius:10px;padding:10px;margin-bottom:6px;min-height:44px}
+.pj:hover{background:var(--bg)}
+.pj.on{border-color:var(--ink);background:var(--bg)}
+.pj b{display:block;font-weight:500}
+.pj small{color:var(--mute);display:flex;justify-content:space-between;gap:8px}
+.badge{background:var(--acc);color:#fff;border-radius:20px;padding:0 7px;font-size:12px;font-weight:600}
+.mini{height:4px;background:var(--line);border-radius:4px;margin-top:8px;overflow:hidden}.mini span{display:block;height:100%;background:var(--ink)}
+.main{display:flex;flex-direction:column;gap:16px}
+.head{padding:18px 20px}
+.head h1{font-size:clamp(22px,2.6vw,30px);line-height:1.1;font-weight:600;margin:0 0 6px;text-wrap:balance}
+.meta{display:flex;flex-wrap:wrap;gap:6px 18px;color:var(--mute);font-size:14px}
+.meta b{color:var(--ink);font-weight:500}
+.scale{position:relative;margin:26px 6px 4px;height:58px}
+.scale .rail{position:absolute;left:0;right:0;top:22px;height:2px;background:var(--ink)}
+.scale .tick{position:absolute;top:14px;width:2px;height:18px;background:var(--ink);transform:translateX(-1px)}
+.scale .lbl{position:absolute;top:36px;font-size:12px;color:var(--mute);transform:translateX(-50%);white-space:nowrap}
+.scale .lbl.done{color:var(--ink)}.scale .lbl.cur{color:var(--acc);font-weight:600}
+.scale .lbl.blk{color:var(--bad);font-weight:600}
+.needle{position:absolute;top:-6px;width:0;height:0;border:8px solid transparent;border-top:12px solid var(--acc);transform:translateX(-8px);transition:left .6s ease}
+.tabs{display:flex;gap:4px;padding:6px;border-bottom:1px solid var(--line);overflow-x:auto}
+.tabs button{border:0;background:none;padding:10px 14px;border-radius:8px;min-height:44px;white-space:nowrap;color:var(--mute)}
+.tabs button.on{background:var(--ink);color:var(--card)}
+.body{padding:16px 20px 20px}
+.ev{display:grid;grid-template-columns:36px minmax(0,1fr);gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.ev:last-child{border-bottom:0}
+.av{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:600;background:var(--bg);border:1px solid var(--line)}
+.ev .who{font-size:13px;color:var(--mute)}.ev .who b{color:var(--ink);font-weight:500}
+.ev p{margin:2px 0 0}
+.ai .av{background:var(--ink);color:var(--card);border:0;position:relative}
+.ai .av::after{content:"";position:absolute;width:2px;height:10px;background:var(--acc);top:7px;left:17px;transform-origin:50% 100%;transform:rotate(35deg)}
+.note{margin-top:8px;border-radius:10px;padding:12px 14px;background:var(--accs);border-left:3px solid var(--acc)}
+.note.ok{background:var(--bg);border-left-color:var(--ok)}
+.note.block{border-left-color:var(--bad)}
+.note h4{margin:0 0 4px;font-size:14px;font-weight:600}
+.note ul{margin:6px 0 0;padding-left:18px}
+.ref{display:inline-block;font-size:12px;border:1px solid var(--line);background:var(--card);border-radius:6px;padding:1px 7px;margin:6px 6px 0 0}
+.mk{display:inline-block;font-size:11px;font-weight:600;color:var(--acc);border:1px solid var(--acc);border-radius:5px;padding:0 6px;margin-left:6px;vertical-align:1px}
+.think{color:var(--mute);font-size:14px}
+.think span{animation:b 1s infinite}.think span:nth-child(2){animation-delay:.2s}.think span:nth-child(3){animation-delay:.4s}
+@keyframes b{50%{opacity:.2}}
+.flash{animation:f 1.6s ease}
+@keyframes f{0%{background:var(--accs)}100%{background:transparent}}
+.task{display:grid;grid-template-columns:24px minmax(0,1fr) auto;gap:10px;align-items:start;padding:12px 0;border-bottom:1px solid var(--line)}
+.task input{width:20px;height:20px;accent-color:var(--acc);margin-top:2px}
+.task.done .t{text-decoration:line-through;color:var(--mute)}
+.task small{color:var(--mute);display:block}
+.due{font-size:13px;white-space:nowrap;color:var(--mute)}.due.soon{color:var(--warn);font-weight:500}
+.filter{display:flex;gap:6px;margin-bottom:6px;flex-wrap:wrap}
+.chip{border:1px solid var(--line);background:none;border-radius:20px;padding:6px 12px;min-height:36px;font-size:13px}
+.chip.on{border-color:var(--ink);background:var(--ink);color:var(--card)}
+.doc{padding:12px 0;border-bottom:1px solid var(--line)}
+.doc b{font-weight:500}.doc .code{font-size:12px;color:var(--mute)}
+.doc ul{margin:6px 0 0;padding-left:18px;color:var(--mute);font-size:14px}
+.doc .used{color:var(--acc);font-size:12px;font-weight:500}
+.agent{padding:16px;align-self:start;display:flex;flex-direction:column;gap:16px}
+.gauge{display:flex;gap:12px;align-items:center}
+.gauge .dial{width:64px;height:64px;flex:none}
+.gauge p{margin:0;font-size:14px;color:var(--mute)}.gauge b{color:var(--ink);font-weight:500}
+.stat{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.stat div{background:var(--bg);border-radius:8px;padding:8px 10px;font-size:12px;color:var(--mute)}
+.stat b{display:block;font-size:20px;font-weight:500;color:var(--ink)}
+.comp label{display:block;font-size:13px;color:var(--mute);margin:10px 0 4px}
+.comp select,.comp input{width:100%;font-size:16px;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);min-height:44px}
+.go{width:100%;margin-top:12px;border:0;border-radius:8px;background:var(--acc);color:#fff;font-weight:600;min-height:46px}
+.go:disabled{opacity:.5;cursor:wait}
+.reset{background:none;border:0;color:var(--mute);font-size:13px;text-decoration:underline;padding:6px 0;min-height:32px}
+.hint{font-size:13px;color:var(--mute);margin:8px 0 0}
+.empty{color:var(--mute);padding:20px 0;text-align:center}
+@media(max-width:1100px){.app{grid-template-columns:240px minmax(0,1fr)}.agent{grid-column:1/-1;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}}
+@media(max-width:720px){.app{grid-template-columns:minmax(0,1fr)}.side{display:flex;gap:8px;overflow-x:auto}.side h2{display:none}.pj{flex:0 0 220px;margin:0}.kpi{margin-left:0;gap:16px}.scale .lbl{font-size:10.5px}.scale .lbl:not(.cur):not(.blk){display:none}.head{padding:16px}.body{padding:12px 16px 16px}}
+.tourbtn{border:1px solid var(--bg);background:none;color:var(--bg);border-radius:8px;padding:6px 12px;min-height:38px;font-size:14px}
+.blocker{position:fixed;inset:0;z-index:40;display:none}
+.blocker.on{display:block}
+.dim{position:fixed;inset:0;background:rgba(10,11,12,.55);z-index:39;display:none}
+.dim.on{display:block}
+.spot{position:relative;z-index:50;pointer-events:none;background:var(--card);border-radius:10px;outline:3px solid var(--acc);outline-offset:4px;transition:outline-color .3s}
+.tour{position:fixed;z-index:70;right:24px;bottom:24px;width:min(420px,calc(100vw - 32px));background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;box-shadow:0 20px 50px rgba(0,0,0,.35);display:none}
+.tour.on{display:block}
+.tour.center{left:50%;top:50%;right:auto;bottom:auto;transform:translate(-50%,-50%);width:min(520px,calc(100vw - 32px))}
+.tour .n{font-size:13px;color:var(--acc);font-weight:600}
+.tour h3{margin:4px 0 8px;font-size:22px;line-height:1.15;font-weight:600;text-wrap:balance}
+.tour p{margin:0 0 6px}
+.tour .act{color:var(--mute);font-size:14px;min-height:21px}
+.dots{display:flex;gap:5px;margin:14px 0}
+.dots i{flex:1;height:3px;border-radius:3px;background:var(--line)}.dots i.on{background:var(--acc)}
+.tour .row{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.tnext{border:0;border-radius:8px;background:var(--acc);color:#fff;font-weight:600;min-height:44px;padding:0 20px}
+.tnext:disabled{opacity:.45;cursor:wait}
+.tskip{background:none;border:0;color:var(--mute);text-decoration:underline;min-height:44px;font-size:14px}
+#ring{position:fixed;z-index:60;border:3px solid var(--acc);border-radius:10px;pointer-events:none;display:none;animation:pr 1.4s ease-in-out infinite}
+@keyframes pr{50%{box-shadow:0 0 0 8px rgba(255,79,0,.25)}}
+#ptr{position:fixed;z-index:61;display:none;flex-direction:column;align-items:center;pointer-events:none;transform:translateX(-50%)}
+#ptr.up{flex-direction:column-reverse}
+#ptr .lab{background:var(--acc);color:#fff;font-weight:600;font-size:15px;line-height:1.3;padding:8px 12px;border-radius:8px;max-width:240px;text-align:center;box-shadow:0 6px 18px rgba(0,0,0,.3)}
+#ptr svg{width:34px;height:40px;animation:bob 1s ease-in-out infinite}
+#ptr.up svg{transform:rotate(180deg);animation-name:bobu}
+@keyframes bob{50%{translate:0 6px}}@keyframes bobu{50%{translate:0 -6px}}
+@media(max-width:720px){.tour{right:16px;bottom:16px}}
+@media(max-width:600px){
+ .tour{left:8px;right:8px;bottom:max(8px,env(safe-area-inset-bottom));width:auto;padding:14px 16px 10px;border-radius:12px}
+ .tour.center{left:50%;right:auto;width:calc(100vw - 24px)}
+ .tour h3{font-size:18px;margin:2px 0 6px}.tour p{font-size:14px;line-height:1.45;margin:0 0 4px}.tour .n{font-size:12px}.tour .act{font-size:13px;min-height:0}
+ .dots{margin:8px 0 6px;gap:3px}.tnext{min-height:44px;padding:0 18px}
+ #ptr .lab{font-size:13px;padding:6px 10px;max-width:200px}#ptr svg{width:28px;height:32px}
+ .top{gap:10px}.kpi{gap:14px}.kpi b{font-size:18px}.tourbtn{width:100%}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="logo"><i></i>ОС проектов</div>
+  <div class="kpi" id="kpi"></div>
+  <button class="tourbtn" id="tourAgain" type="button">Смотреть презентацию</button>
+</header>
+<div class="dim" id="dim"></div><div class="blocker" id="block"></div>
+<div id="ring"></div><div id="ptr"><div class="lab" id="ptrL"></div><svg viewBox="0 0 34 40" aria-hidden="true"><path d="M17 2v28" stroke="#ff4f00" stroke-width="5" stroke-linecap="round"/><path d="M5 22l12 14 12-14" fill="none" stroke="#ff4f00" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+<div class="tour" id="tour" role="dialog" aria-live="polite">
+  <div class="n" id="tN"></div><h3 id="tH"></h3><p id="tP"></p><p class="act" id="tA"></p>
+  <div class="dots" id="tD"></div>
+  <div class="row"><button class="tskip" id="tSkip" type="button">Пропустить</button><button class="tnext" id="tNext" type="button">Дальше</button></div>
+</div>
+<main class="app">
+  <nav class="panel side" aria-label="Проекты"><h2>Проекты в работе</h2><div id="plist" style="display:contents"></div></nav>
+  <section class="main">
+    <div class="panel head" id="head"></div>
+    <div class="panel" id="feedPanel">
+      <div class="tabs" role="tablist">
+        <button data-t="feed" class="on">Лента проекта</button>
+        <button data-t="tasks">Задачи</button>
+        <button data-t="docs">Документы компании</button>
+      </div>
+      <div class="body" id="body"></div>
+    </div>
+  </section>
+  <aside class="panel agent" aria-label="ИИ-агент">
+    <div>
+      <h2>ИИ-агент проекта</h2>
+      <div class="gauge">
+        <svg class="dial" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="28" fill="none" stroke="currentColor" stroke-width="2"/><g id="ticks"></g><line id="ndl" x1="32" y1="32" x2="32" y2="10" stroke="#ff4f00" stroke-width="3" stroke-linecap="round" style="transition:transform .6s;transform-origin:32px 32px"/><circle cx="32" cy="32" r="4" fill="currentColor"/></svg>
+        <p id="agState"></p>
+      </div>
+    </div>
+    <div class="stat" id="agStat"></div>
+    <form class="comp" id="comp">
+      <h2>Внести изменение от лица сотрудника</h2>
+      <label for="who">Кто вносит</label>
+      <select id="who"></select>
+      <label for="act">Что меняется</label>
+      <select id="act"></select>
+      <label for="free">Или своими словами</label>
+      <input id="free" placeholder="Например: перенёс монтаж на пятницу">
+      <button class="go" id="go">Внести в проект</button>
+      <p class="hint">После записи агент сверяет изменение с документами компании и, если нужно, пишет прямо в ленту и ставит задачу.</p>
+      <button type="button" class="reset" id="reset">Вернуть демо к началу</button>
+    </form>
+  </aside>
+</main>
+<p style="text-align:center;color:var(--mute);font-size:12px;margin:0 0 20px">Демонстрация: проекты, сотрудники и документы условные.</p>
+<script>
+{
+const DOCS=[
+ {c:'РМ-02',t:'Регламент монтажа приборов учёта',i:['п. 3.4 — ставим только модели из перечня, согласованного с сетевой организацией','п. 5.1 — абонентов уведомляем об отключении не позже чем за 3 рабочих дня','п. 6.2 — норма бригады: до 12 точек учёта в день']},
+ {c:'ИН-05',t:'Инструкция по вводу узла учёта в эксплуатацию',i:['п. 2.2 — акт допуска действителен только с подписью представителя сетей','п. 2.5 — без подписанного акта этап «Ввод» не закрывается']},
+ {c:'СМ-01',t:'Порядок изменения сметы',i:['п. 1.3 — любая замена оборудования требует пересчёта сметы','п. 1.6 — смету выше +5% согласует руководитель проекта']},
+ {c:'ОТ-07',t:'Охрана труда при работах в электроустановках',i:['п. 4.1 — наряд-допуск оформляется до начала работ','п. 4.3 — бригада не меньше 2 человек с группой допуска III+']}
+];
+const STAGES=['Обследование','Проект','Согласование','Закупка','Монтаж','Ввод','Сдача'];
+const PEOPLE=[['Рустам А.','инженер','РА'],['Мадина К.','руководитель проекта','МК'],['Ислам Т.','бригадир монтажа','ИТ'],['Заира Б.','снабжение','ЗБ']];
+const ACTS=[
+ {k:'model',l:'Замена модели счётчика в спецификации',u:'Заменил в спецификации модель счётчика: Меркурий 230 → Нева МТ 314.',
+  ai:{lv:'warn',h:'Новая модель не из согласованного перечня',p:'Нева МТ 314 нет в перечне, согласованном с сетевой организацией. Без согласования сети не примут узел учёта.',d:['Согласовать замену модели с сетевой организацией','Пересчитать смету под новую модель'],r:['РМ-02 п. 3.4','СМ-01 п. 1.3']},
+  tk:[['Согласовать замену модели ПУ с сетевой организацией',2,1],['Пересчитать смету под Нева МТ 314',3,3]]},
+ {k:'date',l:'Перенос даты монтажа',u:'Перенёс начало монтажа на 20 ноября.',
+  ai:{lv:'warn',h:'Нужно уведомить абонентов',p:'Монтаж с отключением 20.11. По регламенту уведомление — минимум за 3 рабочих дня, то есть не позже 17.11, сегодня.',d:['Разослать уведомления об отключении сегодня','Обновить график бригады'],r:['РМ-02 п. 5.1']},
+  tk:[['Разослать абонентам уведомления об отключении',0,1],['Обновить график бригады на 20.11',1,2]]},
+ {k:'act',l:'Загружен акт допуска без подписи сетей',u:'Загрузил акт допуска узла учёта (скан).',
+  ai:{lv:'block',h:'Акт недействителен — этап «Ввод» заблокирован',p:'В акте нет подписи представителя сетевой организации. Пока её нет, этап «Ввод» закрыть нельзя.',d:['Получить подпись представителя сетей','Загрузить подписанный акт заново'],r:['ИН-05 п. 2.2','ИН-05 п. 2.5']},
+  tk:[['Получить подпись представителя сетей на акте допуска',2,0]],block:1},
+ {k:'points',l:'Добавлено 18 точек учёта',u:'Добавил в проект ещё 18 точек учёта по заявке заказчика.',
+  ai:{lv:'warn',h:'Одна бригада не уложится в срок',p:'Теперь в проекте 42 точки. При норме 12 точек в день монтаж займёт 4 дня вместо 2 — срок сдачи сдвигается. Смета тоже меняется.',d:['Выделить вторую бригаду или сдвинуть срок','Пересчитать смету — рост больше 5%, нужно согласование'],r:['РМ-02 п. 6.2','СМ-01 п. 1.6']},
+  tk:[['Решить: вторая бригада или новый срок сдачи',1,1],['Пересчитать и согласовать смету',3,1]]},
+ {k:'pass',l:'Оформлен наряд-допуск на бригаду',u:'Оформил наряд-допуск на бригаду из 3 человек, группа допуска IV.',
+  ai:{lv:'ok',h:'Проверено — замечаний нет',p:'Наряд-допуск оформлен до начала работ, состав бригады соответствует требованиям.',d:[],r:['ОТ-07 п. 4.1','ОТ-07 п. 4.3']},tk:[]}
+];
+const today=new Date(2026,10,17);
+const fmt=n=>{const d=new Date(today);d.setDate(d.getDate()+n);return d.toLocaleDateString('ru-RU',{day:'numeric',month:'short'})};
+const seed=()=>[
+ {id:'p1',n:'ЖК «Северный» — замена 240 счётчиков',cl:'УК «Северный квартал»',st:4,due:'12 дек',pm:'Мадина К.',blk:0,
+  feed:[
+   {ty:'u',w:2,tx:'Закрыл подъезды 1–4, установлено 96 счётчиков.',tm:'вчера, 18:20'},
+   {ty:'a',ai:{lv:'ok',h:'Проверено — замечаний нет',p:'Объём сходится с графиком. Фотофиксация приложена по каждому счётчику.',d:[],r:['РМ-02 п. 6.2']},tm:'вчера, 18:21'},
+   {ty:'u',w:3,tx:'Поставка 140 счётчиков переносится поставщиком на 25 ноября.',tm:'сегодня, 09:05'},
+   {ty:'a',ai:{lv:'warn',h:'Монтаж встанет на 3 дня',p:'Остаток на складе — 22 счётчика, хватит на 2 дня. С 21 по 24 ноября бригаде нечего ставить.',d:['Найти замену поставщику или перекинуть бригаду на другой объект'],r:['РМ-02 п. 6.2']},tm:'сегодня, 09:06'}],
+  tasks:[{t:'Перекинуть бригаду на 21–24 ноября',d:2,w:1,ai:1,ok:0},{t:'Фотоотчёт по подъездам 5–6',d:4,w:2,ai:0,ok:0},{t:'Подписать график с УК',d:-1,w:1,ai:0,ok:1}]},
+ {id:'p2',n:'ТЦ «Галерея» — система учёта (АСКУЭ)',cl:'ООО «Галерея»',st:2,due:'20 янв',pm:'Рустам А.',blk:0,
+  feed:[{ty:'u',w:0,tx:'Отправил проект АСКУЭ на согласование в сетевую организацию.',tm:'15 ноя, 14:00'},
+   {ty:'a',ai:{lv:'ok',h:'Проверено — замечаний нет',p:'Все модели счётчиков есть в согласованном перечне.',d:[],r:['РМ-02 п. 3.4']},tm:'15 ноя, 14:01'}],
+  tasks:[{t:'Получить ответ сетей по проекту',d:5,w:0,ai:0,ok:0}]},
+ {id:'p3',n:'Школа №12 — узел учёта тепла',cl:'Управление образования',st:5,due:'28 ноя',pm:'Мадина К.',blk:0,
+  feed:[{ty:'u',w:2,tx:'Монтаж узла учёта закончен, пусконаладка пройдена.',tm:'16 ноя, 17:40'}],
+  tasks:[{t:'Вызвать представителя сетей на приёмку',d:1,w:1,ai:0,ok:0}]}
+];
+let P,cur,tab='feed',tf='all',busy=0;
+const load=()=>{try{const s=localStorage.getItem('osdemo');if(s){P=JSON.parse(s);return}}catch(e){}P=seed()};
+const save=()=>{try{localStorage.setItem('osdemo',JSON.stringify(P))}catch(e){}};
+load();cur=P[0].id;
+const $=id=>document.getElementById(id);
+const pj=()=>P.find(p=>p.id===cur);
+const open=p=>p.tasks.filter(t=>!t.ok);
+const aiOpen=p=>open(p).filter(t=>t.ai).length;
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]);
+
+function note(a){return `<div class="note ${a.lv==='ok'?'ok':a.lv==='block'?'block':''}"><h4>${a.h}</h4><div>${a.p}</div>${a.d.length?`<ul>${a.d.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}${a.r.map(x=>`<span class="ref">${x}</span>`).join('')}${a.tk?`<div class="hint">Создано задач: ${a.tk} — во вкладке «Задачи»</div>`:''}</div>`}
+function kpi(){const all=P.flatMap(open);$('kpi').innerHTML=`<div><b>${P.length}</b>проектов в работе</div><div><b>${all.length}</b>открытых задач</div><div class="hot"><b>${P.reduce((s,p)=>s+aiOpen(p),0)}</b>задач от агента</div>`}
+function side(){$('plist').innerHTML=P.map(p=>`<button class="pj ${p.id===cur?'on':''}" data-p="${p.id}"><b>${esc(p.n)}</b><small><span>${STAGES[p.st]} · до ${p.due}</span>${aiOpen(p)?`<span class="badge" title="Задачи от агента">${aiOpen(p)}</span>`:''}</small><div class="mini"><span style="width:${(p.st+.5)/STAGES.length*100}%"></span></div></button>`).join('')}
+function head(){const p=pj(),n=STAGES.length;
+ $('head').innerHTML=`<h1>${esc(p.n)}</h1><div class="meta"><span>Заказчик: <b>${esc(p.cl)}</b></span><span>Руководитель: <b>${p.pm}</b></span><span>Сдача: <b>${p.due}</b></span></div>
+ <div class="scale" aria-label="Этап: ${STAGES[p.st]}"><div class="rail"></div>${STAGES.map((s,i)=>{const x=(i+.5)/n*100;const c=i<p.st?'done':i===p.st?(p.blk?'blk':'cur'):'';return `<div class="tick" style="left:${x}%"></div><div class="lbl ${c}" style="left:${x}%">${s}${i===p.st&&p.blk?' — стоп':''}</div>`}).join('')}<div class="needle" style="left:${(p.st+.5)/n*100}%"></div></div>`}
+function body(){const p=pj();let h='';
+ if(tab==='feed'){h=p.feed.slice().reverse().map((e,i)=>e.ty==='t'?`<div class="ev ai"><div class="av"></div><div><div class="who"><b>ИИ-агент</b></div><p class="think">Сверяю изменение с документами компании<span>.</span><span>.</span><span>.</span></p></div></div>`:e.ty==='a'?`<div class="ev ai ${i===0&&e.fresh?'flash':''}"><div class="av"></div><div><div class="who"><b>ИИ-агент</b> · ${e.tm}</div>${note(e.ai)}</div></div>`:`<div class="ev"><div class="av">${PEOPLE[e.w][2]}</div><div><div class="who"><b>${PEOPLE[e.w][0]}</b>, ${PEOPLE[e.w][1]} · ${e.tm}</div><p>${esc(e.tx)}</p></div></div>`).join('')||'<p class="empty">В ленте пока пусто</p>'}
+ else if(tab==='tasks'){const L=p.tasks.map((t,i)=>({...t,i})).filter(t=>tf==='all'||(tf==='ai'?t.ai:!t.ok)).sort((a,b)=>a.ok-b.ok||a.d-b.d);
+  h=`<div class="filter">${[['all','Все'],['open','Открытые'],['ai','От агента']].map(([k,l])=>`<button class="chip ${tf===k?'on':''}" data-f="${k}">${l}</button>`).join('')}</div>`+(L.map(t=>`<label class="task ${t.ok?'done':''}"><input type="checkbox" data-k="${t.i}" ${t.ok?'checked':''}><div><span class="t">${esc(t.t)}</span>${t.ai?'<span class="mk">от ИИ</span>':''}<small>Исполнитель: ${PEOPLE[t.w][0]}${t.ai?' · поставлено агентом по документам компании':''}</small></div><span class="due ${!t.ok&&t.d<=1?'soon':''}">${t.d<0?'выполнено':t.d===0?'сегодня':'до '+fmt(t.d)}</span></label>`).join('')||'<p class="empty">Задач нет</p>')}
+ else{const used=new Set(p.feed.filter(e=>e.ty==='a').flatMap(e=>e.ai.r.map(r=>r.split(' ')[0])));
+  h='<p class="hint" style="margin:0 0 4px">Агент проверяет каждое изменение по этим документам.</p>'+DOCS.map(d=>`<div class="doc"><span class="code">${d.c}</span> ${used.has(d.c)?'<span class="used">· применялся в этом проекте</span>':''}<br><b>${d.t}</b><ul>${d.i.map(x=>`<li>${x}</li>`).join('')}</ul></div>`).join('')}
+ $('body').innerHTML=h}
+function agent(){const p=pj(),a=p.feed.filter(e=>e.ty==='a'),w=a.filter(e=>e.ai.lv!=='ok').length,ao=aiOpen(p);
+ const risk=p.blk?3:Math.min(ao,3);
+ $('ndl').style.transform=`rotate(${-90+risk*60}deg)`;
+ $('agState').innerHTML=busy?'<b>Анализирует изменение…</b>':p.blk?'<b>Есть блокировка.</b> Этап нельзя закрыть, пока не решён вопрос.':ao?`<b>Требует внимания:</b> ${ao} ${ao===1?'задача':'задачи'} от агента не закрыты.`:'<b>Всё в порядке.</b> Агент следит за изменениями.';
+ $('agStat').innerHTML=`<div><b>${p.feed.filter(e=>e.ty==='u').length}</b>изменений проверено</div><div><b>${w}</b>замечаний</div><div><b>${p.tasks.filter(t=>t.ai).length}</b>задач поставлено</div>`}
+function render(){kpi();side();head();body();agent();document.querySelectorAll('.tabs button').forEach(b=>b.classList.toggle('on',b.dataset.t===tab))}
+
+const tk=$('ticks');tk.innerHTML=[0,1,2,3].map(i=>{const a=(-90+i*60-90)*Math.PI/180;return `<line x1="${32+22*Math.cos(a)}" y1="${32+22*Math.sin(a)}" x2="${32+27*Math.cos(a)}" y2="${32+27*Math.sin(a)}" stroke="${i>2?'#ff4f00':'currentColor'}" stroke-width="2"/>`}).join('');
+$('who').innerHTML=PEOPLE.map((p,i)=>`<option value="${i}">${p[0]} — ${p[1]}</option>`).join('');
+$('act').innerHTML=ACTS.map((a,i)=>`<option value="${i}">${a.l}</option>`).join('');
+
+$('plist').onclick=e=>{const b=e.target.closest('[data-p]');if(b){cur=b.dataset.p;render()}};
+document.querySelector('.tabs').onclick=e=>{const b=e.target.closest('[data-t]');if(b){tab=b.dataset.t;render()}};
+$('body').onclick=e=>{const f=e.target.closest('[data-f]');if(f){tf=f.dataset.f;body()}};
+$('body').onchange=e=>{const k=e.target.dataset.k;if(k!=null){const t=pj().tasks[k];t.ok=e.target.checked?1:0;if(t.ok&&/подпись/.test(t.t))pj().blk=0;save();render()}};
+$('reset').onclick=()=>{P=seed();cur=P[0].id;tab='feed';save();render()};
+function pick(txt){const s=txt.toLowerCase();if(/модел|счётчик|счетчик|замен/.test(s))return 0;if(/дат|срок|перен|перенёс/.test(s))return 1;if(/акт/.test(s))return 2;if(/точ|добав/.test(s))return 3;return -1}
+function change(ms=1800){return new Promise(res=>{if(busy)return res();
+ const p=pj(),w=+$('who').value,free=$('free').value.trim();let A=ACTS[+$('act').value],tx=A.u,ai;
+ if(free){tx=free;const k=pick(free);if(k<0)A={ai:{lv:'ok',h:'Проверено — замечаний нет',p:'Изменение не затрагивает требования регламентов компании. Действий не требуется.',d:[],r:[]},tk:[]};else{A=ACTS[k];ai={...A.ai,h:'Понял: '+A.l.toLowerCase()+'. '+A.ai.h}}}
+ ai=ai||A.ai;
+ const tm='сегодня, '+new Date().toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'});
+ p.feed.push({ty:'u',w,tx,tm},{ty:'t'});busy=1;tab='feed';$('go').disabled=true;$('free').value='';render();
+ setTimeout(()=>{p.feed.pop();p.feed.push({ty:'a',fresh:1,ai:{...ai,tk:A.tk.length},tm});
+  A.tk.forEach(([t,d,wh])=>p.tasks.push({t,d,w:wh,ai:1,ok:0}));if(A.block)p.blk=1;
+  busy=0;$('go').disabled=false;save();render();p.feed[p.feed.length-1].fresh=0;res()},ms)})}
+$('comp').onsubmit=e=>{e.preventDefault();change()};
+
+/* ---------- презентация ---------- */
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+let spotEl=null,step=0,live=0,run=0,ptSel=null;
+const phone=()=>innerWidth<=600;
+const cardH=()=>{const c=$('tour');return c.classList.contains('center')?0:c.offsetHeight+16};
+function bring(el,top){const r=el.getBoundingClientRect(),bottom=innerHeight-(phone()?cardH():0);
+ if(r.top<top||r.bottom>bottom-10)scrollTo({top:Math.max(0,r.top+scrollY-top),behavior:'smooth'})}
+function spot(sel){if(spotEl)spotEl.classList.remove('spot');spotEl=sel?document.querySelector(sel):null;$('dim').classList.toggle('on',!!live);
+ if(spotEl){spotEl.classList.add('spot');bring(spotEl,12)}}
+function point(sel,txt){ptSel=sel;$('ptrL').textContent=txt||'';const t=sel&&document.querySelector(sel);
+ if(t){if(!phone()){const r=t.getBoundingClientRect();if(r.top<120||r.bottom>innerHeight-260)t.scrollIntoView({block:'center',behavior:'smooth'})}else bring(t,110)}}
+function place(){const t=live&&ptSel&&document.querySelector(ptSel),R=$('ring'),A=$('ptr');
+ if(!t){R.style.display=A.style.display='none';}else{const r=t.getBoundingClientRect();
+  Object.assign(R.style,{display:'block',left:r.left-6+'px',top:r.top-6+'px',width:r.width+12+'px',height:r.height+12+'px'});
+  const x=Math.max(130,Math.min(innerWidth-130,r.left+Math.min(r.width/2,90)));A.style.display='flex';A.style.left=x+'px';
+  if(r.top>140){A.classList.remove('up');A.style.top='';A.style.bottom=innerHeight-r.top+10+'px'}else{A.classList.add('up');A.style.bottom='';A.style.top=r.bottom+10+'px'}}
+ requestAnimationFrame(place)}
+requestAnimationFrame(place);
+const say=t=>{$('tA').textContent=t};
+const goP=id=>{cur=id;tab='feed';render()};
+const setForm=(w,a)=>{$('who').value=w;$('act').value=a;$('free').value=''};
+async function typeIn(s){const f=$('free');f.value='';for(const ch of s){f.value+=ch;await wait(110)}}
+const NOTE='#body .ev.ai:first-child .note';
+async function agentAnswers(){spot('#feedPanel');tab='feed';render();say('Агент сверяет изменение с документами компании…');await wait(400);await change(3000);say('');}
+const STEPS=[
+ {c:1,h:'ОС проектов с ИИ-агентом',p:'Все проекты компании в одном месте. За каждым проектом следит ИИ-агент: проверяет любое изменение по документам компании и подсказывает, что из этого следует. Покажу четыре ситуации. Оранжевая стрелка будет показывать, что именно изменилось.'},
+ {s:'.side',pt:'.side .pj.on .badge',l:'Задачи от агента, которые ещё не закрыты',h:'Все проекты в одном списке',p:'У каждого проекта видно этап и срок сдачи. Оранжевая цифра — сколько задач от агента ещё не закрыто.'},
+ {s:'#head',f:()=>goP('p3'),pt:'.needle',l:'Здесь проект сейчас',h:'Шкала этапов',p:'Стрелка показывает этап проекта. Школа №12 на этапе «Ввод»: узел учёта смонтирован, осталось сдать его сетям.'},
+ {s:'#comp',f:()=>{goP('p3');setForm(2,2)},pt:'#act',l:'Бригадир загружает акт допуска',h:'Ситуация 1. Акт без подписи',p:'Бригадир вносит в проект акт допуска. В акте нет подписи представителя сетей — по инструкции компании такой акт недействителен. Нажмите «Дальше» — изменение уйдёт в проект.'},
+ {f:agentAnswers,pt:NOTE,l:'Агент сразу написал в ленту проекта',h:'Агент заметил проблему',p:'Через пару секунд агент пишет прямо в ленте: акт недействителен, что сделать и на какой пункт инструкции он опирается.'},
+ {s:'#head',pt:'.scale .lbl.blk',l:'Этап «Ввод» заблокирован',h:'Этап остановлен',p:'Агент заблокировал этап «Ввод» — на шкале он стал красным. Закрыть этап нельзя, пока нет подписи.'},
+ {s:'#feedPanel',f:()=>{tab='tasks';tf='all';render()},pt:'#body .task:not(.done) .mk',l:'Задачу поставил агент',h:'Агент сам поставил задачу',p:'Во вкладке «Задачи» появилась задача «получить подпись» с пометкой «от ИИ». Никому не нужно помнить об этом вручную.'},
+ {s:'#feedPanel',f:async()=>{say('Сотрудник получил подпись и отмечает задачу…');await wait(1500);const p=pj(),i=p.tasks.findIndex(t=>/подпись/.test(t.t)&&!t.ok);if(i>=0){p.tasks[i].ok=1;p.blk=0;save();render()}say('')},pt:'#body .task.done',l:'Задача выполнена',h:'Подпись получена',p:'Сотрудник отметил задачу выполненной.'},
+ {s:'#head',pt:'.scale .lbl.cur',l:'Блок снят — этап снова в работе',h:'Блокировка снята',p:'Как только задача закрыта, этап снова в работе. Никто не закроет этап раньше времени.'},
+ {s:'#comp',f:()=>{goP('p1');setForm(1,1)},pt:'#act',l:'Руководитель переносит монтаж',h:'Ситуация 2. Перенос даты монтажа',p:'Переходим в проект ЖК «Северный». Руководитель переносит монтаж на 20 ноября.'},
+ {f:agentAnswers,pt:NOTE,l:'Агент посчитал: уведомить нужно сегодня',h:'Агент сам считает сроки',p:'Перед монтажом свет отключают, а жильцов по регламенту предупреждают минимум за 3 рабочих дня. Агент посчитал, что это нужно сделать сегодня, и поставил задачи.'},
+ {s:'#comp',f:()=>setForm(2,4),pt:'#act',l:'Бригадир оформил наряд-допуск',h:'Ситуация 3. Всё по правилам',p:'Бригадир оформил наряд-допуск как положено: до начала работ и на бригаду с нужным допуском.'},
+ {f:agentAnswers,pt:NOTE,l:'Замечаний нет — задач не ставит',h:'Агент не пишет лишнего',p:'Если всё в порядке, агент коротко отмечает «замечаний нет» и задач не ставит. Проект не засоряется лишним.'},
+ {s:'#comp',f:async()=>{setForm(1,0);point('#free','Сотрудник пишет своими словами');await typeIn('перенёс монтаж на пятницу')},pt:'#free',l:'Сотрудник пишет своими словами',h:'Ситуация 4. Своими словами',p:'Сотруднику не нужно выбирать из списка — он пишет как привык: «перенёс монтаж на пятницу».'},
+ {f:agentAnswers,pt:NOTE,l:'Агент понял: это перенос срока',h:'Агент понимает смысл',p:'Агент понял, что речь о переносе срока, и подсказал то же, что и при выборе из списка: предупредить жильцов сегодня.'},
+ {c:1,h:'Теперь попробуйте сами',p:'Панель очистится до начального вида. Выбирайте проекты, вносите изменения справа, отмечайте задачи — агент будет отвечать на каждое действие. Презентацию можно запустить заново кнопкой вверху.',last:1}
+];
+function dots(){$('tD').innerHTML=STEPS.map((_,i)=>`<i class="${i<=step?'on':''}"></i>`).join('')}
+async function show(i){step=i;const S=STEPS[i],my=++run;
+ $('tour').classList.toggle('center',!!S.c);$('tN').textContent=`Шаг ${i+1} из ${STEPS.length}`;$('tH').textContent=S.h;$('tP').textContent=S.p;say('');dots();
+ $('tNext').textContent=S.last?'Попробовать самому':'Дальше';$('tSkip').style.visibility=S.last?'hidden':'visible';
+ point(null);spot(S.s||null);$('tNext').disabled=true;
+ if(S.f)await S.f();if(my!==run)return;if(S.s)spot(S.s);
+ await wait(S.f?500:250);if(my!==run)return;point(S.pt||null,S.l);
+ await wait(S.pt?700:0);if(my!==run)return;$('tNext').disabled=false;$('tNext').focus({preventScroll:true})}
+function startTour(){live=1;document.body.style.paddingBottom=phone()?'60vh':'';P=seed();cur='p1';tab='feed';tf='all';render();$('tour').classList.add('on');$('block').classList.add('on');show(0)}
+function endTour(){live=0;document.body.style.paddingBottom='';run++;point(null);spot(null);$('tour').classList.remove('on');$('block').classList.remove('on');$('dim').classList.remove('on');
+ P=seed();cur='p1';tab='feed';tf='all';save();busy=0;$('go').disabled=false;$('free').value='';render();window.scrollTo({top:0,behavior:'smooth'})}
+$('tNext').onclick=()=>{if(STEPS[step].last)endTour();else show(step+1)};
+$('tSkip').onclick=endTour;
+$('tourAgain').onclick=()=>{if(!busy)startTour()};
+render();startTour();
+}
+</script>
+</body>
+</html>
